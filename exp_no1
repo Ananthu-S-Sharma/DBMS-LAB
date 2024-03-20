@@ -1,0 +1,134 @@
+mysql> CREATE DATABASE college;
+Query OK, 1 row affected (0.21 sec)
+
+mysql> USE college;
+Database changed
+mysql> CREATE TABLE student(roll_no int PRIMARY KEY,name varchar(30),dob DATE,address TEXT,phone_no varchar(30),blood_grp varchar(5));
+Query OK, 0 rows affected (1.28 sec)
+
+mysql> DESC student;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| roll_no   | int         | NO   | PRI | NULL    |       |
+| name      | varchar(30) | YES  |     | NULL    |       |
+| dob       | date        | YES  |     | NULL    |       |
+| address   | text        | YES  |     | NULL    |       |
+| phone_no  | varchar(30) | YES  |     | NULL    |       |
+| blood_grp | varchar(5)  | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> CREATE TABLE course(course_id int,course_name varchar(50),course_duration int);
+Query OK, 0 rows affected (1.60 sec)
+
+mysql> DESC course;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| course_id       | int         | YES  |     | NULL    |       |
+| course_name     | varchar(50) | YES  |     | NULL    |       |
+| course_duration | int         | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student
+    -> DROP column blood_grp;
+Query OK, 0 rows affected (0.51 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE student
+    -> ADD adar_no int;
+Query OK, 0 rows affected (0.70 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE student 
+    -> MODIFY column phone_no int;
+Query OK, 0 rows affected (2.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> CREATE DATABASE organization;
+Query OK, 1 row affected (0.15 sec)
+
+mysql> USE organization;
+Database changed
+mysql> CREATE TABLE employee(emp_no varchar(10),emp_name varchar(50),dob date,address text,mobile_no int,dep_no varchar(30),salary int);
+Query OK, 0 rows affected (0.94 sec)
+
+mysql> DESC employee;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| emp_no    | varchar(10) | YES  |     | NULL    |       |
+| emp_name  | varchar(50) | YES  |     | NULL    |       |
+| dob       | date        | YES  |     | NULL    |       |
+| address   | text        | YES  |     | NULL    |       |
+| mobile_no | int         | YES  |     | NULL    |       |
+| dep_no    | varchar(30) | YES  |     | NULL    |       |
+| salary    | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TABLE department(dep_no varchar,dep_name varchar(50),location varchar(50));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',dep_name varchar(50),location varchar(50))' at line 1
+mysql> CREATE TABLE department(dep_no varchar(50),dep_name varchar(50),location varchar(50));
+Query OK, 0 rows affected (1.65 sec)
+
+mysql> DESC department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| dep_no   | varchar(50) | YES  |     | NULL    |       |
+| dep_name | varchar(50) | YES  |     | NULL    |       |
+| location | varchar(50) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE department
+    -> ADD PRIMARY KEY(dep_no);
+Query OK, 0 rows affected (1.78 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| dep_no   | varchar(50) | NO   | PRI | NULL    |       |
+| dep_name | varchar(50) | YES  |     | NULL    |       |
+| location | varchar(50) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee
+    -> ADD designation varchar(50);
+Query OK, 0 rows affected (0.64 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC employee;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| emp_no      | varchar(10) | YES  |     | NULL    |       |
+| emp_name    | varchar(50) | YES  |     | NULL    |       |
+| dob         | date        | YES  |     | NULL    |       |
+| address     | text        | YES  |     | NULL    |       |
+| mobile_no   | int         | YES  |     | NULL    |       |
+| dep_no      | varchar(30) | YES  |     | NULL    |       |
+| salary      | int         | YES  |     | NULL    |       |
+| designation | varchar(50) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> ALTER TABLE department 
+    -> DROP column location;
+Query OK, 0 rows affected (0.71 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| dep_no   | varchar(50) | NO   | PRI | NULL    |       |
+| dep_name | varchar(50) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+

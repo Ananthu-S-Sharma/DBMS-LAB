@@ -1,0 +1,359 @@
+Database changed
+mysql> DESC employee;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| emp_no      | varchar(10) | YES  |     | NULL    |       |
+| emp_name    | varchar(50) | YES  |     | NULL    |       |
+| dob         | date        | YES  |     | NULL    |       |
+| address     | text        | YES  |     | NULL    |       |
+| mobile_no   | int         | YES  |     | NULL    |       |
+| dep_no      | varchar(30) | YES  |     | NULL    |       |
+| salary      | int         | YES  |     | NULL    |       |
+| designation | varchar(50) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+
+
+
+mysql>INSERT INTO employee(emp_no,emp_name,dob,address,mobile_no,dep_no,salary,designation)VALUES('3','Bijo',"2001-10-07",'House No:11','996119169','D017','2500','Helper'),('4','Achu',"2001-03-14",'House No:19','956271714','D20','10000','Clerk'),('5','Ananthu',"2001-03-19",'House No:07','996140567','D06','45000','Manager'),('6','Vishnu',"2002-02-19",'House No:01','990123456','D02','7000','Assistant'),('7','John',"2001-09-01",'House No:46','987654321','D01','200','Clerk'),('8','Jagan',"2002-12-21",'House No:10','912345678','D05','110000','Teacher'),('9','Ammu',"2001-02-11",'House No:78','978654321','D16','45000','Senior Assistant'),('10','Joel',"2002-10-01",'House No:31','902345678','D30','100000','Computer Assistant');
+
+
+mysql> SELECT * from employee;
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation        |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| 1      | Aswin    | 2001-04-08 | House No:3  | 996119136 | D08    | 125000 | Computer Assistant |
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    | 300000 | Manager            |
+| 3      | Bijo     | 2001-10-07 | House No:11 | 996119169 | D017   |   2500 | Helper             |
+| 4      | Achu     | 2001-03-14 | House No:19 | 956271714 | D20    |  10000 | Clerk              |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  45000 | Manager            |
+| 6      | Vishnu   | 2002-02-19 | House No:01 | 990123456 | D02    |   7000 | Assistant          |
+| 7      | John     | 2001-09-01 | House No:46 | 987654321 | D01    |    200 | Clerk              |
+| 8      | Jagan    | 2002-12-21 | House No:10 | 912345678 | D05    | 110000 | Teacher            |
+| 9      | Ammu     | 2001-02-11 | House No:78 | 978654321 | D16    |  45000 | Senior Assistant   |
+| 10     | Joel     | 2002-10-01 | House No:31 | 902345678 | D30    | 100000 | Computer Assistant |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+10 rows in set (0.00 sec)
+
+
+
+
+
+Database changed
+mysql> desc employee;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| emp_no      | varchar(10) | YES  |     | NULL    |       |
+| emp_name    | varchar(50) | YES  |     | NULL    |       |
+| dob         | date        | YES  |     | NULL    |       |
+| address     | text        | YES  |     | NULL    |       |
+| mobile_no   | int         | YES  |     | NULL    |       |
+| dep_no      | varchar(30) | YES  |     | NULL    |       |
+| salary      | int         | YES  |     | NULL    |       |
+| designation | varchar(50) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> insert into department values('d01','sales');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> desc department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| dep_no   | varchar(50) | NO   | PRI | NULL    |       |
+| dep_name | varchar(50) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from department;
++--------+----------+
+| dep_no | dep_name |
++--------+----------+
+| d01    | sales    |
++--------+----------+
+1 row in set (0.00 sec)
+
+mysql> insert into department values('d02','manager'),('d03','finance'),('d04','accountant'),('d05','mediahead'),('d06','clerk'),('d07','analyst'),('d08','assistant'),('d09','tester'),('d10','designer');
+Query OK, 9 rows affected (0.10 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++--------+------------+
+| dep_no | dep_name   |
++--------+------------+
+| d01    | sales      |
+| d02    | manager    |
+| d03    | finance    |
+| d04    | accountant |
+| d05    | mediahead  |
+| d06    | clerk      |
+| d07    | analyst    |
+| d08    | assistant  |
+| d09    | tester     |
+| d10    | designer   |
++--------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation        |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| 1      | Aswin    | 2001-04-08 | House No:3  | 996119136 | D08    | 125000 | Computer Assistant |
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    | 300000 | Manager            |
+| 3      | Bijo     | 2001-10-07 | House No:11 | 996119169 | D017   |   2500 | Helper             |
+| 4      | Achu     | 2001-03-14 | House No:19 | 956271714 | D20    |  10000 | Clerk              |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  45000 | Manager            |
+| 6      | Vishnu   | 2002-02-19 | House No:01 | 990123456 | D02    |   7000 | Assistant          |
+| 7      | John     | 2001-09-01 | House No:46 | 996140567 | D01    |    200 | Clerk              |
+| 8      | Jagan    | 2002-12-21 | House No:10 | 912345678 | D05    | 110000 | Teacher            |
+| 9      | Ammu     | 2001-02-11 | House No:78 | 978654321 | D16    |  45000 | Senior Assistant   |
+| 10     | Joel     | 2002-10-01 | House No:31 | 902345678 | D30    | 100000 | Computer Assistant |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+10 rows in set (0.02 sec)
+
+mysql> select emp_no ,emp_name from employee where dep_no='D02';
++--------+----------+
+| emp_no | emp_name |
++--------+----------+
+| 6      | Vishnu   |
++--------+----------+
+1 row in set (0.00 sec)
+
+mysql> select emp_name,emp_no from employee where salary>2000 and salary<=5000;
++----------+--------+
+| emp_name | emp_no |
++----------+--------+
+| Bijo     | 3      |
++----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select emp_no,emp_name,designation,dep_no,salary from employee ORDER BY SALARY DESC;
++--------+----------+--------------------+--------+--------+
+| emp_no | emp_name | designation        | dep_no | salary |
++--------+----------+--------------------+--------+--------+
+| 2      | Alen     | Manager            | D19    | 300000 |
+| 1      | Aswin    | Computer Assistant | D08    | 125000 |
+| 8      | Jagan    | Teacher            | D05    | 110000 |
+| 10     | Joel     | Computer Assistant | D30    | 100000 |
+| 5      | Ananthu  | Manager            | D06    |  45000 |
+| 9      | Ammu     | Senior Assistant   | D16    |  45000 |
+| 4      | Achu     | Clerk              | D20    |  10000 |
+| 6      | Vishnu   | Assistant          | D02    |   7000 |
+| 3      | Bijo     | Helper             | D017   |   2500 |
+| 7      | John     | Clerk              | D01    |    200 |
++--------+----------+--------------------+--------+--------+
+10 rows in set (0.00 sec)
+
+mysql> select DISTINCT designation from employee;
++--------------------+
+| designation        |
++--------------------+
+| Computer Assistant |
+| Manager            |
+| Helper             |
+| Clerk              |
+| Assistant          |
+| Teacher            |
+| Senior Assistant   |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> update employee set salary=50000 where designation ='manager';
+Query OK, 2 rows affected (0.10 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from employee;
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation        |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| 1      | Aswin    | 2001-04-08 | House No:3  | 996119136 | D08    | 125000 | Computer Assistant |
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    |  50000 | Manager            |
+| 3      | Bijo     | 2001-10-07 | House No:11 | 996119169 | D017   |   2500 | Helper             |
+| 4      | Achu     | 2001-03-14 | House No:19 | 956271714 | D20    |  10000 | Clerk              |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  50000 | Manager            |
+| 6      | Vishnu   | 2002-02-19 | House No:01 | 990123456 | D02    |   7000 | Assistant          |
+| 7      | John     | 2001-09-01 | House No:46 | 996140567 | D01    |    200 | Clerk              |
+| 8      | Jagan    | 2002-12-21 | House No:10 | 912345678 | D05    | 110000 | Teacher            |
+| 9      | Ammu     | 2001-02-11 | House No:78 | 978654321 | D16    |  45000 | Senior Assistant   |
+| 10     | Joel     | 2002-10-01 | House No:31 | 902345678 | D30    | 100000 | Computer Assistant |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> update employee set mobile_no='99271301' where emp_name='John';
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation        |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| 1      | Aswin    | 2001-04-08 | House No:3  | 996119136 | D08    | 125000 | Computer Assistant |
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    |  50000 | Manager            |
+| 3      | Bijo     | 2001-10-07 | House No:11 | 996119169 | D017   |   2500 | Helper             |
+| 4      | Achu     | 2001-03-14 | House No:19 | 956271714 | D20    |  10000 | Clerk              |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  50000 | Manager            |
+| 6      | Vishnu   | 2002-02-19 | House No:01 | 990123456 | D02    |   7000 | Assistant          |
+| 7      | John     | 2001-09-01 | House No:46 |  99271301 | D01    |    200 | Clerk              |
+| 8      | Jagan    | 2002-12-21 | House No:10 | 912345678 | D05    | 110000 | Teacher            |
+| 9      | Ammu     | 2001-02-11 | House No:78 | 978654321 | D16    |  45000 | Senior Assistant   |
+| 10     | Joel     | 2002-10-01 | House No:31 | 902345678 | D30    | 100000 | Computer Assistant |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from employee where salary ='700';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from employee;
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation        |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| 1      | Aswin    | 2001-04-08 | House No:3  | 996119136 | D08    | 125000 | Computer Assistant |
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    |  50000 | Manager            |
+| 3      | Bijo     | 2001-10-07 | House No:11 | 996119169 | D017   |   2500 | Helper             |
+| 4      | Achu     | 2001-03-14 | House No:19 | 956271714 | D20    |  10000 | Clerk              |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  50000 | Manager            |
+| 6      | Vishnu   | 2002-02-19 | House No:01 | 990123456 | D02    |   7000 | Assistant          |
+| 7      | John     | 2001-09-01 | House No:46 |  99271301 | D01    |    200 | Clerk              |
+| 8      | Jagan    | 2002-12-21 | House No:10 | 912345678 | D05    | 110000 | Teacher            |
+| 9      | Ammu     | 2001-02-11 | House No:78 | 978654321 | D16    |  45000 | Senior Assistant   |
+| 10     | Joel     | 2002-10-01 | House No:31 | 902345678 | D30    | 100000 | Computer Assistant |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from employee where salary ='200';
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from employee;
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation        |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| 1      | Aswin    | 2001-04-08 | House No:3  | 996119136 | D08    | 125000 | Computer Assistant |
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    |  50000 | Manager            |
+| 3      | Bijo     | 2001-10-07 | House No:11 | 996119169 | D017   |   2500 | Helper             |
+| 4      | Achu     | 2001-03-14 | House No:19 | 956271714 | D20    |  10000 | Clerk              |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  50000 | Manager            |
+| 6      | Vishnu   | 2002-02-19 | House No:01 | 990123456 | D02    |   7000 | Assistant          |
+| 8      | Jagan    | 2002-12-21 | House No:10 | 912345678 | D05    | 110000 | Teacher            |
+| 9      | Ammu     | 2001-02-11 | House No:78 | 978654321 | D16    |  45000 | Senior Assistant   |
+| 10     | Joel     | 2002-10-01 | House No:31 | 902345678 | D30    | 100000 | Computer Assistant |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+9 rows in set (0.01 sec)
+
+mysql> select emp_name ,mobile_no from employee where emp_name LIKE 'A%';
++----------+-----------+
+| emp_name | mobile_no |
++----------+-----------+
+| Aswin    | 996119136 |
+| Alen     | 956271703 |
+| Achu     | 956271714 |
+| Ananthu  | 996140567 |
+| Ammu     | 978654321 |
++----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where LENGTH(emp_name)>3 and salary>2500;
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation        |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| 1      | Aswin    | 2001-04-08 | House No:3  | 996119136 | D08    | 125000 | Computer Assistant |
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    |  50000 | Manager            |
+| 4      | Achu     | 2001-03-14 | House No:19 | 956271714 | D20    |  10000 | Clerk              |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  50000 | Manager            |
+| 6      | Vishnu   | 2002-02-19 | House No:01 | 990123456 | D02    |   7000 | Assistant          |
+| 8      | Jagan    | 2002-12-21 | House No:10 | 912345678 | D05    | 110000 | Teacher            |
+| 9      | Ammu     | 2001-02-11 | House No:78 | 978654321 | D16    |  45000 | Senior Assistant   |
+| 10     | Joel     | 2002-10-01 | House No:31 | 902345678 | D30    | 100000 | Computer Assistant |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from employee where dep_no='D01','D02','D06';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','D02','D06'' at line 1
+mysql> select * from employee where dep_no IN('D01',D02','D06');
+    '> 
+    '> 
+
+^C
+mysql> select * from employee where dep_no IN('D01',D02','D06');
+    '> 
+
+^C
+mysql> select emp_name,emp_no from employee where salary BETWEEN 120000 and 300000;
++----------+--------+
+| emp_name | emp_no |
++----------+--------+
+| Aswin    | 1      |
++----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where designation='Manager' OR 'Computer Assistant';
++--------+----------+------------+-------------+-----------+--------+--------+-------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation |
++--------+----------+------------+-------------+-----------+--------+--------+-------------+
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    |  50000 | Manager     |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  50000 | Manager     |
++--------+----------+------------+-------------+-----------+--------+--------+-------------+
+2 rows in set, 1 warning (0.00 sec)
+
+mysql> select * from employee where designation='Manager' OR designation='Computer Assistant';
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| emp_no | emp_name | dob        | address     | mobile_no | dep_no | salary | designation        |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+| 1      | Aswin    | 2001-04-08 | House No:3  | 996119136 | D08    | 125000 | Computer Assistant |
+| 2      | Alen     | 2001-08-11 | House No:17 | 956271703 | D19    |  50000 | Manager            |
+| 5      | Ananthu  | 2001-03-19 | House No:07 | 996140567 | D06    |  50000 | Manager            |
+| 10     | Joel     | 2002-10-01 | House No:31 | 902345678 | D30    | 100000 | Computer Assistant |
++--------+----------+------------+-------------+-----------+--------+--------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select dep_no,COUNT(*) AS num_employees from employee GROUP BY dep_no;
++--------+---------------+
+| dep_no | num_employees |
++--------+---------------+
+| D08    |             1 |
+| D19    |             1 |
+| D017   |             1 |
+| D20    |             1 |
+| D06    |             1 |
+| D02    |             1 |
+| D05    |             1 |
+| D16    |             1 |
+| D30    |             1 |
++--------+---------------+
+9 rows in set (0.00 sec)
+
+mysql> select dep_no ,AVG(salary)AS avg_salary from employee GROUP BY dep_no;
++--------+-------------+
+| dep_no | avg_salary  |
++--------+-------------+
+| D08    | 125000.0000 |
+| D19    |  50000.0000 |
+| D017   |   2500.0000 |
+| D20    |  10000.0000 |
+| D06    |  50000.0000 |
+| D02    |   7000.0000 |
+| D05    | 110000.0000 |
+| D16    |  45000.0000 |
+| D30    | 100000.0000 |
++--------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> select dep_no,SUM(salary) AS total_salary from employee GROUP BY dep_no;
++--------+--------------+
+| dep_no | total_salary |
++--------+--------------+
+| D08    |       125000 |
+| D19    |        50000 |
+| D017   |         2500 |
+| D20    |        10000 |
+| D06    |        50000 |
+| D02    |         7000 |
+| D05    |       110000 |
+| D16    |        45000 |
+| D30    |       100000 |
++--------+--------------+
+9 rows in set (0.00 sec)
+
