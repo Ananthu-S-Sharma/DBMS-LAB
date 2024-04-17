@@ -1,0 +1,349 @@
+mysql> USE organization;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> CREATE TABLE Jobs(job_id INT PRIMARY KEY,job_title VARCHAR(255) NOT NULL,min_salary DECIMAL(10,2),max_salary DECIMAL(10,2));
+Query OK, 0 rows affected (1.22 sec)
+
+mysql> DESC Jobs;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| job_id     | int           | NO   | PRI | NULL    |       |
+| job_title  | varchar(255)  | NO   |     | NULL    |       |
+| min_salary | decimal(10,2) | YES  |     | NULL    |       |
+| max_salary | decimal(10,2) | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+
+
+
+mysql> CREATE TABLE Regions(region_id INT PRIMARY KEY,region_name VARCHAR(255) NOT NULL);
+Query OK, 0 rows affected (0.96 sec)
+
+mysql> DESC Regions;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| region_id   | int          | NO   | PRI | NULL    |       |
+| region_name | varchar(255) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+
+
+
+mysql> CREATE TABLE Countries(country_id INT PRIMARY KEY,country_name VARCHAR(255) NOT NULL,region_id INT,FOREIGN KEY(region_id) REFERENCES Regions(region_id));
+Query OK, 0 rows affected (0.86 sec)
+
+mysql> DESC Countries;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| country_id   | int          | NO   | PRI | NULL    |       |
+| country_name | varchar(255) | NO   |     | NULL    |       |
+| region_id    | int          | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+
+
+
+
+mysql> CREATE TABLE Locations(location_id INT PRIMARY KEY,street_address VARCHAR(255) NOT NULL,postal_code VARCHAR(255) NOT NULL,city VARCHAR(255) NOT NULL,state_province VARCHAR(255) NOT NULL,country_id INT,FOREIGN KEY(country_id) REFERENCES Countries(country_id));
+Query OK, 0 rows affected (0.82 sec)
+
+mysql> DESC Locations;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| location_id    | int          | NO   | PRI | NULL    |       |
+| street_address | varchar(255) | NO   |     | NULL    |       |
+| postal_code    | varchar(255) | NO   |     | NULL    |       |
+| city           | varchar(255) | NO   |     | NULL    |       |
+| state_province | varchar(255) | NO   |     | NULL    |       |
+| country_id     | int          | YES  | MUL | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+
+
+
+mysql> CREATE TABLE Departments(department_id INT PRIMARY KEY,department_name VARCHAR(255) NOT NULL,location_id INT,FOREIGN KEY(location_id) REFERENCES Locations(location_id));
+Query OK, 0 rows affected (1.62 sec)
+
+mysql> DESC Departments;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| department_id   | int          | NO   | PRI | NULL    |       |
+| department_name | varchar(255) | NO   |     | NULL    |       |
+| location_id     | int          | YES  | MUL | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+
+
+
+mysql> CREATE TABLE Employees(employee_id INT PRIMARY KEY,first_name VARCHAR(255) NOT NULL,last_name VARCHAR(255) NOT NULL,email VARCHAR(255) NOT NULL,phone_number VARCHAR(255) NOT NULL,hire_date VARCHAR(255) NOT NULL,job_id INT,salary DECIMAL(10,2),manager_id INT,department_id INT,FOREIGN KEY(job_id)REFERENCES Jobs(job_id),FOREIGN KEY(department_id)REFERENCES Departments(department_id));
+Query OK, 0 rows affected (1.86 sec)
+
+mysql> DESC Employees;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| employee_id   | int           | NO   | PRI | NULL    |       |
+| first_name    | varchar(255)  | NO   |     | NULL    |       |
+| last_name     | varchar(255)  | NO   |     | NULL    |       |
+| email         | varchar(255)  | NO   |     | NULL    |       |
+| phone_number  | varchar(255)  | NO   |     | NULL    |       |
+| hire_date     | varchar(255)  | NO   |     | NULL    |       |
+| job_id        | int           | YES  | MUL | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
+| manager_id    | int           | YES  |     | NULL    |       |
+| department_id | int           | YES  | MUL | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+
+
+
+
+mysql> CREATE TABLE Dependents(dependent_id INT PRIMARY KEY,first_name VARCHAR(255) NOT NULL,last_name VARCHAR(255) NOT NULL,relationship VARCHAR(255) NOT NULL,employee_id INT,FOREIGN KEY(employee_id) REFERENCES Employees(employee_id));
+Query OK, 0 rows affected (1.00 sec)
+
+mysql> DESC Dependents;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| dependent_id | int          | NO   | PRI | NULL    |       |
+| first_name   | varchar(255) | NO   |     | NULL    |       |
+| last_name    | varchar(255) | NO   |     | NULL    |       |
+| relationship | varchar(255) | NO   |     | NULL    |       |
+| employee_id  | int          | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+mysql> DESC Regions;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| region_id   | int          | NO   | PRI | NULL    |       |
+| region_name | varchar(255) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Regions(region_id,region_name)VALUES('1','Europe');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO Regions(region_id,region_name)VALUES('2','America'),('3','Asia'),('4','Africa');
+Query OK, 3 rows affected (0.12 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * from Regions;
++-----------+-------------+
+| region_id | region_name |
++-----------+-------------+
+|         1 | Europe      |
+|         2 | America     |
+|         3 | Asia        |
+|         4 | Africa      |
++-----------+-------------+
+4 rows in set (0.00 sec)
+
+
+
+
+mysql> DESC Countries;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| country_id   | int          | NO   | PRI | NULL    |       |
+| country_name | varchar(255) | NO   |     | NULL    |       |
+| region_id    | int          | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+mysql> INSERT INTO Countries(country_id,country_name,region_id) VALUES ('01','Argentina','2'),('02','Australia','3'),('03','Belgium','1'),('04','Brazil','2'),('05','Canada','2'),('06','Switzerland','1'),('25','China','3'),('30','Germany','1'),('08','Denmark','1'),('09','Egypt','4'),('29','France','1'),('11','HongKong','3'),('12','Israel','4'),('13','India','3'),('37','Italy','1'),('15','Japan','3'),('16','Kuwait','4'),('17','Mexico','2'),('18','Nigeria','4'),('19','Netherlands','1'),('20','Singapore','3'),('38','United Kingdom','1'),('22','United States of America','2'),('40','Zambia','4'),('24','Zimbabwe','4');
+Query OK, 25 rows affected (0.21 sec)
+Records: 25  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * from Countries;
++------------+--------------------------+-----------+
+| country_id | country_name             | region_id |
++------------+--------------------------+-----------+
+|          1 | Argentina                |         2 |
+|          2 | Australia                |         3 |
+|          3 | Belgium                  |         1 |
+|          4 | Brazil                   |         2 |
+|          5 | Canada                   |         2 |
+|          6 | Switzerland              |         1 |
+|          8 | Denmark                  |         1 |
+|          9 | Egypt                    |         4 |
+|         11 | HongKong                 |         3 |
+|         12 | Israel                   |         4 |
+|         13 | India                    |         3 |
+|         15 | Japan                    |         3 |
+|         16 | Kuwait                   |         4 |
+|         17 | Mexico                   |         2 |
+|         18 | Nigeria                  |         4 |
+|         19 | Netherlands              |         1 |
+|         20 | Singapore                |         3 |
+|         22 | United States of America |         2 |
+|         24 | Zimbabwe                 |         4 |
+|         25 | China                    |         3 |
+|         29 | France                   |         1 |
+|         30 | Germany                  |         1 |
+|         37 | Italy                    |         1 |
+|         38 | United Kingdom           |         1 |
+|         40 | Zambia                   |         4 |
++------------+--------------------------+-----------+
+25 rows in set (0.00 sec)
+
+
+mysql> DESC Locations;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| location_id    | int          | NO   | PRI | NULL    |       |
+| street_address | varchar(255) | NO   |     | NULL    |       |
+| postal_code    | varchar(255) | NO   |     | NULL    |       |
+| city           | varchar(255) | NO   |     | NULL    |       |
+| state_province | varchar(255) | NO   |     | NULL    |       |
+| country_id     | int          | YES  | MUL | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+mysql> INSERT INTO Locations(location_id,street_address,postal_code,city,state_province,country_id)VALUES('1400','2014 Jabberwocky Rd','26192','Southlake','Texas','22'),('1500','2011 Interiors Blvd','99236','South San Francisco','California','22'),('1700','2004 Charade Rd','98199','Seattle','Washington','22'),('1800','147 Spadina Ave','M5V 2L7','Toronto','Ontario','5'),('2400','8204 Arthur St','1234','London','Pqrs','38'),('2500','Magdalen Centre, The Oxford Science Park','OX9 9ZB','Oxford','Oxford','38'),('2700','Schwanthalerstr. 7031','80925','Munich','Bavaria','8');
+Query OK, 7 rows affected (0.11 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * from Locations;
++-------------+------------------------------------------+-------------+---------------------+----------------+------------+
+| location_id | street_address                           | postal_code | city                | state_province | country_id |
++-------------+------------------------------------------+-------------+---------------------+----------------+------------+
+|        1400 | 2014 Jabberwocky Rd                      | 26192       | Southlake           | Texas          |         22 |
+|        1500 | 2011 Interiors Blvd                      | 99236       | South San Francisco | California     |         22 |
+|        1700 | 2004 Charade Rd                          | 98199       | Seattle             | Washington     |         22 |
+|        1800 | 147 Spadina Ave                          | M5V 2L7     | Toronto             | Ontario        |          5 |
+|        2400 | 8204 Arthur St                           | 1234        | London              | Pqrs           |         38 |
+|        2500 | Magdalen Centre, The Oxford Science Park | OX9 9ZB     | Oxford              | Oxford         |         38 |
+|        2700 | Schwanthalerstr. 7031                    | 80925       | Munich              | Bavaria        |          8 |
++-------------+------------------------------------------+-------------+---------------------+----------------+------------+
+
+
+mysql> INSERT INTO Jobs(job_id,job_title,min_salary,max_salary)VALUES('20','Public Accountant','4200.00','9000.00'),('27','Accounting Manager','8200.00','16000.00'),('39','Administration Assistant','3000.00','6000.00'),('34','President','20000.00','40000.00'),('37','Administration Vice President','15000.00','30000.00'),('30','Accountant','4200.00','9000.00'),('28','Finance Manager','8200.00','16000.00'),('24','Human Resources Representative','4000.00','9000.00'),('23','Programmer','4000.00','10000.00'),(10,'Marketing Manager','9000.00','15000.00'),('11','Marketing Representative','4000.00','9000.00'),('12','Public Relations Representative','4500.00','10500.00'),('13','Purchasing Clerk','2500.00','5500.00'),('14','Purchasing Manager','8000.00','15000.00'),('15','Sales Manager','10000.00','20000.00'),('16','Sales Representative','6000.00','12000.00'),('17','Shipping Clerk','2500.00','5500.00'),('18','Stock Clerk','2000.00','5000.00'),('19','Stock Manager','5500.00','8500.00');
+Query OK, 19 rows affected (0.12 sec)
+Records: 19  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * from Jobs;
++--------+---------------------------------+------------+------------+
+| job_id | job_title                       | min_salary | max_salary |
++--------+---------------------------------+------------+------------+
+|      1 | manager                         |   50000.00 |  100000.00 |
+|      2 | clerk                           |   10000.00 |   20000.00 |
+|      3 | assistant                       |   15000.00 |   25000.00 |
+|      4 | tester                          |  150000.00 |  100000.00 |
+|     10 | Marketing Manager               |    9000.00 |   15000.00 |
+|     11 | Marketing Representative        |    4000.00 |    9000.00 |
+|     12 | Public Relations Representative |    4500.00 |   10500.00 |
+|     13 | Purchasing Clerk                |    2500.00 |    5500.00 |
+|     14 | Purchasing Manager              |    8000.00 |   15000.00 |
+|     15 | Sales Manager                   |   10000.00 |   20000.00 |
+|     16 | Sales Representative            |    6000.00 |   12000.00 |
+|     17 | Shipping Clerk                  |    2500.00 |    5500.00 |
+|     18 | Stock Clerk                     |    2000.00 |    5000.00 |
+|     19 | Stock Manager                   |    5500.00 |    8500.00 |
+|     20 | Public Accountant               |    4200.00 |    9000.00 |
+|     23 | Programmer                      |    4000.00 |   10000.00 |
+|     24 | Human Resources Representative  |    4000.00 |    9000.00 |
+|     27 | Accounting Manager              |    8200.00 |   16000.00 |
+|     28 | Finance Manager                 |    8200.00 |   16000.00 |
+|     30 | Accountant                      |    4200.00 |    9000.00 |
+|     34 | President                       |   20000.00 |   40000.00 |
+|     37 | Administration Vice President   |   15000.00 |   30000.00 |
+|     39 | Administration Assistant        |    3000.00 |    6000.00 |
++--------+---------------------------------+------------+------------+
+
+
+
+mysql> DESC Employees;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| employee_id   | int           | NO   | PRI | NULL    |       |
+| first_name    | varchar(255)  | NO   |     | NULL    |       |
+| last_name     | varchar(255)  | NO   |     | NULL    |       |
+| email         | varchar(255)  | NO   |     | NULL    |       |
+| phone_number  | varchar(255)  | NO   |     | NULL    |       |
+| hire_date     | varchar(255)  | NO   |     | NULL    |       |
+| job_id        | int           | YES  | MUL | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
+| manager_id    | int           | YES  |     | NULL    |       |
+| department_id | int           | YES  | MUL | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+mysql> INSERT INTO Employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,manager_id,department_id) VALUES (114,'Den','Raphaely','den.raphaely@sqltutorial.org','515.127.4561','1994-12-07',14,11000.00,100,3);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> INSERT INTO Employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,manager_id,department_id) VALUES (115,'Alexander','Khoo','alexander.khoo@sqltutorial.org','515.127.4562','1995-05-18',13,3100.00,114,3);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO Employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,manager_id,department_id) VALUES (116,'Shelli','Baida','shelli.baida@sqltutorial.org','515.127.4563','1997-12-24',13,2900.00,114,3);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> INSERT INTO Employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,manager_id,department_id) VALUES (117,'Sigal','Tobias','sigal.tobias@sqltutorial.org','515.127.4564','1997-07-24',13,2800.00,114,3);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> INSERT INTO Employees(employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,manager_id,department_id) VALUES (118,'Guy','Himuro','guy.himuro@sqltutorial.org','515.127.4565','1998-11-15',13,2600.00,114,3);
+Query OK, 1 row affected (0.15 sec)
+
+
+mysql> SELECT * from Employees;
++-------------+------------+-------------+-----------------------------------+--------------+------------+--------+----------+------------+---------------+
+| employee_id | first_name | last_name   | email                             | phone_number | hire_date  | job_id | salary   | manager_id | department_id |
++-------------+------------+-------------+-----------------------------------+--------------+------------+--------+----------+------------+---------------+
+|         100 | Steven     | King        | steven.king@sqltutorial.org       | 515.123.4567 | 1987-06-17 |      4 | 24000.00 |       NULL |             9 |
+|         114 | Den        | Raphaely    | den.raphaely@sqltutorial.org      | 515.127.4561 | 1994-12-07 |     14 | 11000.00 |        100 |             3 |
+|         115 | Alexander  | Khoo        | alexander.khoo@sqltutorial.org    | 515.127.4562 | 1995-05-18 |     13 |  3100.00 |        114 |             3 |
+|         116 | Shelli     | Baida       | shelli.baida@sqltutorial.org      | 515.127.4563 | 1997-12-24 |     13 |  2900.00 |        114 |             3 |
+|         117 | Sigal      | Tobias      | sigal.tobias@sqltutorial.org      | 515.127.4564 | 1997-07-24 |     13 |  2800.00 |        114 |             3 |
+|         118 | Guy        | Himuro      | guy.himuro@sqltutorial.org        | 515.127.4565 | 1998-11-15 |     13 |  2600.00 |        114 |             3 |
+|         119 | Karen      | Colmenares  | karen.colmenares@sqltutorial.org  | 515.127.4566 | 1999-08-10 |     13 |  2500.00 |        114 |             3 |
+|         120 | Matthew    | Weiss       | matthew.weiss@sqltutorial.org     | 650.123.1234 | 1996-07-18 |     19 |  8000.00 |        100 |             5 |
+|         121 | Adam       | Fripp       | adam.fripp@sqltutorial.org        | 650.123.2234 | 1997-04-10 |     19 |  8200.00 |        100 |             5 |
+|         122 | Payam      | Kaufling    | payam.kaufling@sqltutorial.org    | 650.123.3234 | 1995-05-01 |     19 |  7900.00 |        100 |             5 |
+|         123 | Shanta     | Vollman     | shanta.vollman@sqltutorial.org    | 650.123.4234 | 1997-10-10 |     19 |  6500.00 |        100 |             5 |
+|         126 | Irene      | Mikkilineni | irene.mikkilineni@sqltutorial.org | 650.124.1224 | 1998-09-28 |     18 |  2700.00 |        120 |             5 |
+|         178 | Kimberely  | Grant       | kimberely.grant@sqltutorial.org   | 515.124.666  | 1999-05-24 |     16 |  7000.00 |        100 |             8 |
+|         192 | Sarah      | Bell        | sarah.bell@sqltutorial.org        | 650.501.1876 | 1996-02-04 |     17 |  4000.00 |        123 |             5 |
+|         193 | Britney    | Everett     | britney.everett@sqltutorial.org   | 650.501.2876 | 1997-03-03 |     17 |  3900.00 |        123 |             5 |
+|         200 | Jennifer   | Whalen      | jennifer.whalen@sqltutorial.org   | 515.123.4444 | 1987-09-17 |      3 |  4400.00 |        101 |             1 |
+|         201 | Michael    | Hartstein   | michael.hartstein@sqltutorial.org | 515.123.5555 | 1996-02-17 |     10 | 13000.00 |        100 |             2 |
+|         202 | Pat        | Fay         | pat.fay@sqltutorial.org           | 603.123.6666 | 1997-08-17 |     11 |  6000.00 |        201 |             2 |
+|         204 | Hermann    | Baer        | hermann.baer@sqltutorial.org      | 515.123.8888 | 1994-06-07 |     12 | 10000.00 |        101 |             7 |
+|         205 | Shelley    | Higgins     | shelley.higgins@sqltutorial.org   | 515.123.8080 | 1994-06-07 |      2 | 12000.00 |        101 |            11 |
+|         206 | William    | Gietz       | william.gietz@sqltutorial.org     | 515.123.8181 | 1994-06-07 |      1 |  8300.00 |        205 |            11 |
++-------------+------------+-------------+-----------------------------------+--------------+------------+--------+----------+------------+---------------+
+
+
+mysql> DESC Dependents; 
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| dependent_id | int          | NO   | PRI | NULL    |       |
+| first_name   | varchar(255) | NO   |     | NULL    |       |
+| last_name    | varchar(255) | NO   |     | NULL    |       |
+| relationship | varchar(255) | NO   |     | NULL    |       |
+| employee_id  | int          | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql> INSERT INTO Dependents(dependent_id,first_name,last_name,relationship,employee_id) VALUES (1,'Penelope','Gietz','Child',206);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> INSERT INTO Dependents(dependent_id,first_name,last_name,relationship,employee_id) VALUES (2,'Nick','Higgins','Child',205);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> INSERT INTO Dependents(dependent_id,first_name,last_name,relationship,employee_id) VALUES (3,'Ed','Whalen','Child',200);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> INSERT INTO Dependents(dependent_id,first_name,last_name,relationship,employee_id) VALUES (4,'Jennifer','King','Child',100);
+Query OK, 1 row affected (0.10 sec)
+
+
+
