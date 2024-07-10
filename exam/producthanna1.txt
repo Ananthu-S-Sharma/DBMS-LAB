@@ -1,0 +1,239 @@
+qtsn
+
+
+
+Consider the following relational schema for a Sales database application:
+Product (Prodid, Prodesc, Price, Stock)
+Purchase (Purid, Proid, qty, supplierName)
+Sales (Saleid, Proid, qty, custname)
+a. The primary keys are underlined. Identify the foreign keys.
+[5]
+b. Create the above-mentioned tables and populate the tables
+[20]
+Note: Read all questions and populate values accordingly.
+c. Include the constraint on Saleid that it starts with letter ‘S’.
+[5]
+d. Display the ProdIDs of the product which are purchased more than 5 times
+[10]
+e. Create a view that keeps track of Prodid, price, Purid, qty and customerName who made the
+purchase.
+[10]
+f. Create a sequence named Product_Sequence that gets incremented by 10 and use it for inserting
+Prodid values in Product table.
+[5]
+g. Develop a procedure named Product_Purchase which accepts a purchase id and displays all
+products that are purchased, qty and price of the product
+
+
+
+creation
+
+mysql> create table product(prodid int primary key,prodesc varchar(20),price double(10,2),stock int);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc product;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| prodid  | int          | NO   | PRI | NULL    |       |
+| prodesc | varchar(20)  | YES  |     | NULL    |       |
+| price   | double(10,2) | YES  |     | NULL    |       |
+| stock   | int          | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+
+create table purchase(purid int primary key,proid int,foreign key(proid)
+references product(prodid),qty int,suppliername varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc purchase;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| purid        | int         | NO   | PRI | NULL    |       |
+| proid        | int         | YES  | MUL | NULL    |       |
+| qty          | int         | YES  |     | NULL    |       |
+| suppliername | varchar(20) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+
+
+mysql> create table sales(saleid varchar(20) primary key check(saleid like 's%'),proid int,foreign key(proid) references product(prodid),qty int,custname varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc sales;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| saleid   | varchar(20) | NO   | PRI | NULL    |       |
+| proid    | int         | YES  | MUL | NULL    |       |
+| qty      | int         | YES  |     | NULL    |       |
+| custname | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+
+answers
+
+
+
+a )  foreign keys - in purchase table proid is a foreign key( this is the prodid from product table)
+		in sales table proid is a foreign key( this is the prodid from product table)
+		
+b ) created tables and inserting values
+	
+		
+mysql> insert into product values(1,'milma',41,5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product values(2,'rice',250,10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product values(3,'wheat',100,10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from product;
++--------+---------+--------+-------+
+| prodid | prodesc | price  | stock |
++--------+---------+--------+-------+
+|      1 | milma   |  41.00 |     5 |
+|      2 | rice    | 250.00 |    10 |
+|      3 | wheat   | 100.00 |    10 |
+
+
+
+mysql> insert into purchase values(100,1,2,'vishnu');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into purchase values(101,1,2,'adith');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into purchase values(103,1,1,'arjun');
+Query OK, 1 row affected (0.33 sec)
+
+mysql> insert into purchase values(104,2,1,'vishnu');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into purchase values(105,2,1,'arun');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into purchase values(106,2,1,'akhil');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into purchase values(107,2,1,'anandhu');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into purchase values(108,2,2,'arathi');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into purchase values(109,2,2,'athira');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from purchase;
++-------+-------+------+--------------+
+| purid | proid | qty  | suppliername |
++-------+-------+------+--------------+
+|   100 |     1 |    2 | vishnu       |
+|   101 |     1 |    2 | adith        |
+|   103 |     1 |    1 | arjun        |
+|   104 |     2 |    1 | vishnu       |
+|   105 |     2 |    1 | arun         |
+|   106 |     2 |    1 | akhil        |
+|   107 |     2 |    1 | anandhu      |
+|   108 |     2 |    2 | arathi       |
+|   109 |     2 |    2 | athira       |
++-------+-------+------+--------------+
+
+
+checking whether check constraint is working in sales table
+
+mysql> insert into sales values('1',2,2,'veena');
+ERROR 3819 (HY000): Check constraint 'sales_chk_1' is violated.
+
+
+yes it is working
+
+
+mysql> insert into sales values('s1',2,2,'veena');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sales values('s2',3,2,'veena');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sales values('s3',1,1,'avani');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from sales;
++--------+-------+------+----------+
+| saleid | proid | qty  | custname |
++--------+-------+------+----------+
+| s1     |     2 |    2 | veena    |
+| s2     |     3 |    2 | veena    |
+| s3     |     1 |    1 | avani    |
++--------+-------+------+----------+
+3 rows in set (0.00 sec)
+
+
+c ) check constarint implementes check above creation of sales 
+
+
+d)
+select proid from purchase group by proid having count(purid)>5;
++-------+
+| proid |
++-------+
+|     2 |
++-------+
+
+
+
+e)
+
+mysql> create view view2 as select p.prodid,p.price,p1.purid,p1.qty,s.custname f
+rom product p join purchase p1 on p.prodid=p1.proid join sales s on p.prodid=s.p
+roid;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from view2;
++--------+--------+-------+------+----------+
+| prodid | price  | purid | qty  | custname |
++--------+--------+-------+------+----------+
+|      1 |  41.00 |   100 |    2 | avani    |
+|      1 |  41.00 |   101 |    2 | avani    |
+|      1 |  41.00 |   103 |    1 | avani    |
+|      2 | 250.00 |   104 |    1 | veena    |
+|      2 | 250.00 |   105 |    1 | veena    |
+|      2 | 250.00 |   106 |    1 | veena    |
+|      2 | 250.00 |   107 |    1 | veena    |
+|      2 | 250.00 |   108 |    2 | veena    |
+|      2 | 250.00 |   109 |    2 | veena    |
++--------+--------+-------+------+----------+
+9 rows in set (0.00 sec)
+
+
+
+
+f) sequence arinjooda
+
+g)
+		delimiter $$
+create procedure product_purchase(IN purchase_id int)
+begin 
+	select p1.proid,p.prodesc,p.price,p1.purid,p1.qty from product p join purchase p1 on p.prodid=p1.proid where p1.purid=purchase_id;
+
+end $$
+delimiter ;
+
+mysql> call product_purchase(100);
++-------+---------+-------+-------+------+
+| proid | prodesc | price | purid | qty  |
++-------+---------+-------+-------+------+
+|     1 | milma   | 41.00 |   100 |    2 |
++-------+---------+-------+-------+------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+

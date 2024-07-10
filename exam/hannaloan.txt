@@ -1,0 +1,196 @@
+Customer (Custid, Custname, Age, phno)
+Loan (Loanid, Amount, Custid)
+
+a. The primary keys are underlined. Identify the foreign keys.
+[5]
+b. Create the above mentioned tables and populate the tables
+[10]
+Note: Read all questions and populate values accordingly.
+c. Include the constraint on Loanid that it starts with letter ‘L’.
+[5]
+d. Display the list of the customerids and total Loan amount taken
+[10]
+e. Display the CustId and CustName who have taken less than 2 loans
+[10]
+f. Create a view that keeps track of Custid, Custname, loanid and loan amount.
+[5]
+g. Create a sequence named Customer_Sequence that gets incremented by 3 and use it for
+inserting Custid values in Customer table.
+[5]
+h. Develop a stored procedure named Customer_Loan which accepts Loanid as input and
+displays Custid, CustName and loan_amount.
+
+
+
+create table customer(custid int primary key,custname varchar(20),age int,phno int(10));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| custid   | int         | NO   | PRI | NULL    |       |
+| custname | varchar(20) | YES  |     | NULL    |       |
+| age      | int         | YES  |     | NULL    |       |
+| phno     | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> create table loan(loanid varchar(10) primary key check(loanid like 'L%'),amount double(10,2),custid int,foreign key(custid) references customer(custid));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> desc loan;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| loanid | varchar(10)  | NO   | PRI | NULL    |       |
+| amount | double(10,2) | YES  |     | NULL    |       |
+| custid | int          | YES  | MUL | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+insert into customer values(1,'vishnu',21,956296831);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(2,'anu',21,356296831);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(3,'anudas',22,556296831);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++--------+----------+------+-----------+
+| custid | custname | age  | phno      |
++--------+----------+------+-----------+
+|      1 | vishnu   |   21 | 956296831 |
+|      2 | anu      |   21 | 356296831 |
+|      3 | anudas   |   22 | 556296831 |
++--------+----------+------+-----------+
+3 rows in set (0.00 sec)
+
+
+insert into loan values('L1',10000,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into loan values('L2',5000,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into loan values('L3',6000,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into loan values('L4',4000,2);
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> select * from loan;
++--------+----------+--------+
+| loanid | amount   | custid |
++--------+----------+--------+
+| L1     | 10000.00 |      1 |
+| L2     |  5000.00 |      1 |
+| L3     |  6000.00 |      2 |
+| L4     |  4000.00 |      2 |
++--------+----------+--------+
+4 rows in set (0.00 sec)
+
+
+
+a)
+	custid in loan table is a foreign key
+	
+b) tables are created and values are inserted
+ c)
+ 	constraint included during creation
+ 	
+ 	
+ d)select c.custid,c.custname,sum(l.amount) as total from customer c left join loan l on c.custid=l.custid group by c.custid;
++--------+----------+----------+
+| custid | custname | total    |
++--------+----------+----------+
+|      1 | vishnu   | 15000.00 |
+|      2 | anu      | 10000.00 |
+|      3 | anudas   |     NULL |
++--------+----------+----------+
+3 rows in set (0.00 sec)
+
+
+more simple but not this perfect way 😃️
+just check this one too 
+
+ 	
+select custid,sum(amount) from loan group by custid;
++--------+-------------+
+| custid | sum(amount) |
++--------+-------------+
+|      1 |    15000.00 |
+|      2 |    10000.00 |
++--------+-------------+
+
+
+
+e)	there is no one with less than 2 loans
+so i am inserting a new value to the table and i ll delete the new values after this query.
+so from next qstn the values will be like old table.
+
+insert into customer values(5,'arjun',23,18998988);
+Query OK, 1 row affected (0.00 sec)
+
+insert into loan values('L8',1000,5);
+Query OK, 1 row affected (0.00 sec)
+
+
+select custid,custname from customer where custid in(select custid from loan group by custid having count(loanid)<2);
++--------+----------+
+| custid | custname |
++--------+----------+
+|      5 | arjun    |
++--------+----------+
+
+deleting this values 
+
+delete from loan where custid=5;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete from customer where custid=5;
+Query OK, 1 row affected (0.00 sec)
+
+
+f)
+create view customerview as select c.custid,c.custname,l.loanid,l.amount from customer c join loan l on c.custid=l.custid;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from customerview;
++--------+----------+--------+----------+
+| custid | custname | loanid | amount   |
++--------+----------+--------+----------+
+|      1 | vishnu   | L1     | 10000.00 |
+|      1 | vishnu   | L2     |  5000.00 |
+|      2 | anu      | L3     |  6000.00 |
+|      2 | anu      | L4     |  4000.00 |
++--------+----------+--------+----------+
+
+ g) 
+ 
+ 
+ 
+ h) 
+ delimiter $$
+create procedure customer_loan(IN loan_id varchar(10))
+begin
+	select c.custid,c.custname,l.amount from customer c join loan l on c.custid=l.custid where l.loanid=loan_id;
+end $$
+delimiter ;
+
+
+
+call customer_loan('L1');
++--------+----------+----------+
+| custid | custname | amount   |
++--------+----------+----------+
+|      1 | vishnu   | 10000.00 |
++--------+----------+----------+
+1 row in set (0.00 sec)
+
+
+
+s
